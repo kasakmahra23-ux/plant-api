@@ -1,4 +1,3 @@
-import gdown
 import os
 
 # Download model from Google Drive (only once)
