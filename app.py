@@ -9,8 +9,10 @@ import os
 url = "https://drive.google.com/uc?id=1_O0vosEt-AHD5_fEGFnBABgafb7WXV39"
 output = "final_plant_model.h5"
 
-if not os.path.exists(output):
-    gdown.download(url, output, quiet=False)
+if os.path.exists(output):
+    os.remove(output)
+
+gdown.download(url, output, quiet=False)
 
 # 🔹 Load model
 model = load_model("final_plant_model.h5", compile=False)
@@ -28,7 +30,7 @@ def home():
 def predict():
     file = request.files['file']
     
-    filepath = "leaf.webp"
+    filepath = "temp.jpg"
     file.save(filepath)
 
     img = image.load_img(filepath, target_size=(128,128))
