@@ -2,7 +2,7 @@ import os
 
 # Download model from Google Drive (only once)
 if not os.path.exists("final_plant_model.keras"):
-    url = "https://drive.google.com/uc?id=1SF006O6C8AN62WBy87A5gXuXZEIyTpkw"
+    url = "https://drive.google.com/uc?id=1_O0vosEt-AHD5_fEGFnBABgafb7WXV39"
     gdown.download(url, "final_plant_model.keras", quiet=False)
 from flask import Flask, request, jsonify
 from tensorflow.keras.models import load_model
