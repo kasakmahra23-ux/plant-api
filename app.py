@@ -7,7 +7,7 @@ import os
 
 # 🔹 Download model from Google Drive
 url = "https://drive.google.com/uc?id=1kuAciB3tyYC6QLZ8dnsvUk8CExKwB38"
-output = "final_plant_model.h5"
+output = "clean_model.h5"
 
 if os.path.exists(output):
     os.remove(output)
@@ -15,7 +15,7 @@ if os.path.exists(output):
 gdown.download(url, output, quiet=False)
 
 # 🔹 Load model
-model = load_model("final_plant_model.h5", compile=False)
+model = load_model("clean_model.h5", compile=False)
 import json
 
 with open("class_names.json") as f:
