@@ -4,22 +4,22 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 import gdown
 import os
+import json
 
-# 🔹 Download model from Google Drive
 url = "https://drive.google.com/uc?id=1kuAciB3tyYC6QLZ8dnsvUk8CExKwB38"
-output = "clean_model.h5"
+output = "model.h5"
+
 
 if os.path.exists(output):
     os.remove(output)
 
 gdown.download(url, output, quiet=False)
 
-# 🔹 Load model
-model = load_model("clean_model.h5", compile=False)
-import json
+model = load_model(output, compile=False)
 
 with open("class_names.json") as f:
     class_names = list(json.load(f).keys())
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -28,8 +28,11 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file uploaded"})
+
     file = request.files['file']
-    
+
     filepath = "temp.jpg"
     file.save(filepath)
 
@@ -37,6 +40,7 @@ def predict():
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0) / 255.0
 
+    
     prediction = model.predict(img_array)
     index = np.argmax(prediction)
 
@@ -47,8 +51,6 @@ def predict():
         "disease": result,
         "confidence": round(confidence, 2)
     })
-
-# 🔹 Required for Render
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
