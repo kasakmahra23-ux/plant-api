@@ -6,7 +6,7 @@ import gdown
 import os
 
 # 🔹 Download model from Google Drive
-url = "https://drive.google.com/uc?id=1_O0vosEt-AHD5_fEGFnBABgafb7WXV39"
+url = "https://drive.google.com/uc?id=1kuAciB3tyYC6QLZ8dnsvUk8CExKwB38"
 output = "final_plant_model.h5"
 
 if os.path.exists(output):
